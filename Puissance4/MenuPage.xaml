@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Puissance4.MenuPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Puissance4.AI"
+             Background="#FFD4CBCB">
+    <Grid>
+
+        <!-- Title -->
+        <TextBlock Text="CONNECT 4"
+                   FontSize="36"
+                   FontWeight="Bold"
+                   Foreground="#333"
+                   HorizontalAlignment="Center"
+                   Margin="0 30 0 0"
+                   VerticalAlignment="Top">
+            <TextBlock.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </TextBlock.RenderTransform>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1.1" Duration="0:0:1" />
+                            <DoubleAnimation Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1.1" Duration="0:0:1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+
+        <!-- Main Menu -->
+        <StackPanel x:Name="GameTypePanel" Visibility="{Binding GameTypePanelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Choose Game Type" FontSize="22" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+            <Button Content="Player vs Player" Style="{StaticResource MenuButton}" Click="PvP_Click"/>
+            <Button Content="Player vs AI" Style="{StaticResource MenuButton}" Click="PvAI_Click"/>
+            <Button Content="AI vs AI" Style="{StaticResource MenuButton}" Click="AIvAI_Click"/>
+            <Button Content="Credits" Style="{StaticResource MenuButton}" Click="Credits_Click"/>
+            <Button Content="Quit" Style="{StaticResource MenuButton}" Click="Quit_Click"/>
+        </StackPanel>
+
+        <!-- Board Menu -->
+        <StackPanel x:Name="BoardTypePanel" Visibility="{Binding BoardTypePanelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Choose Board Representation" FontSize="22" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+            <Button Content="2D Array" Style="{StaticResource MenuButton}" Click="BoardArray_Click"/>
+            <Button Content="Graph-Based" Style="{StaticResource MenuButton}" Click="BoardGraph_Click"/>
+            <Button Content="⬅ Back" Style="{StaticResource MenuButton}" Background="Gray" Click="BackToGameType_Click"/>
+        </StackPanel>
+
+        <!-- Algorithm menu -->
+        <StackPanel x:Name="AlgorithmPanel" Visibility="{Binding AlgorithmPanelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Choose AI Algorithm" FontSize="22" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+            <Button Content="Minimax" Style="{StaticResource MenuButton}" Click="Minimax_Click"/>
+            <Button Content="Monte Carlo" Style="{StaticResource MenuButton}" Click="MonteCarlo_Click"/>
+            <Button Content="⬅ Back" Style="{StaticResource MenuButton}" Background="Gray" Click="BackToBoardType_Click"/>
+        </StackPanel>
+
+        <!-- Difficulty menu -->
+        <StackPanel x:Name="DifficultyPanel" Visibility="{Binding DifficultyPanelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Choose Difficulty" FontSize="22" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+            <Button Content="Easy" Style="{StaticResource MenuButton}" Click="DifficultyEasy_Click"/>
+            <Button Content="Medium" Style="{StaticResource MenuButton}" Click="DifficultyMedium_Click"/>
+            <Button Content="Hard" Style="{StaticResource MenuButton}" Click="DifficultyHard_Click"/>
+            <Button Content="⬅ Back" Style="{StaticResource MenuButton}" Background="Gray" Click="BackToAlgorithm_Click"/>
+        </StackPanel>
+
+        <!-- AI vs AI Setup Panel -->
+        <StackPanel x:Name="AIvsAIPanel" Visibility="{Binding AIvsAIPanelVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="AI vs AI Setup" FontSize="22" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+            <TextBlock Text="(Maximum Efficiency Mode)" FontSize="14" FontStyle="Italic" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="Gray"/>
+
+            <TextBlock Text="Select AI for Player 1" Margin="0 10 0 5" HorizontalAlignment="Center"/>
+            <ComboBox x:Name="AI1ComboBox" Width="250" Height="35" Margin="0 0 0 20" SelectedValue="{Binding SelectedAI1Type}" SelectedValuePath="Tag">
+                <ComboBoxItem Content="Minimax (Array)" Tag="{x:Static local:AIType.MinimaxArray}" />
+                <ComboBoxItem Content="Minimax (Graph)" Tag="{x:Static local:AIType.MinimaxGraph}" />
+                <ComboBoxItem Content="Monte Carlo (Array)" Tag="{x:Static local:AIType.MonteCarloArray}" />
+                <ComboBoxItem Content="Monte Carlo (Graph)" Tag="{x:Static local:AIType.MonteCarloGraph}" />
+            </ComboBox>
+
+            <TextBlock Text="Select AI for Player 2" Margin="0 10 0 5" HorizontalAlignment="Center"/>
+            <ComboBox x:Name="AI2ComboBox" Width="250" Height="35" Margin="0 0 0 30" SelectedValue="{Binding SelectedAI2Type}" SelectedValuePath="Tag">
+                <ComboBoxItem Content="Minimax (Array)" Tag="{x:Static local:AIType.MinimaxArray}" />
+                <ComboBoxItem Content="Minimax (Graph)" Tag="{x:Static local:AIType.MinimaxGraph}" />
+                <ComboBoxItem Content="Monte Carlo (Array)" Tag="{x:Static local:AIType.MonteCarloArray}" />
+                <ComboBoxItem Content="Monte Carlo (Graph)" Tag="{x:Static local:AIType.MonteCarloGraph}" />
+            </ComboBox>
+
+            <Button Content="▶ Start Match" Style="{StaticResource MenuButton}" Click="StartAIVsAIGame_Click"/>
+            <Button Content="⬅ Back" Style="{StaticResource MenuButton}" Background="Gray" Click="BackToGameType_Click"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
